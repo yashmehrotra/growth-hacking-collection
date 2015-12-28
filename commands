@@ -1,0 +1,2 @@
+# Remove Duplicates
+$ cat screen_names.txt | sort | uniq > screen_names.txt
