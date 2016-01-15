@@ -8,8 +8,87 @@ api = twitter.Api(consumer_key=CONSUMER_KEY,
                   access_token_key=AT_KEY,
                   access_token_secret=AT_SEC)
 
-terms = ['#selfie', '#instaselfie', '#insta']
-ht = []
+
+terms = [
+ 'challenges',
+ 'selfie',
+ 'velfie',
+ 'video',
+ 'dub',
+ 'meme',
+ 'fun',
+ 'school',
+ 'class',
+ 'tonguetwister',
+ 'party',
+ 'gamenight',
+ 'partynight',
+ 'college',
+ 'android',
+ 'androidgames',
+ 'ios',
+ 'iosgames',
+ 'newapp',
+ 'app',
+ 'competition',
+ 'challenge',
+ 'selfiewar',
+ 'dubwar',
+ 'crazy',
+ 'acting',
+ 'funtastic',
+ 'funny',
+ 'comedy',
+ 'win',
+ 'kaboom',
+ 'nominate',
+ 'followback',
+ 'fan',
+ 'movie',
+ 'rt',
+ 'celeb',
+ 'justdoit',
+ 'games',
+ 'play',
+ 'dramaqueen',
+ 'leaderboard',
+ 'pinch',
+ 'girls',
+ 'delicious',
+ 'bae',
+ 'fleek',
+ 'trunt',
+ 'doe',
+ 'rekt',
+ 'hella',
+ 'yas',
+ 'GivingMeLife',
+ 'Life',
+ 'Happy',
+ 'Sickening',
+ 'Squad',
+ 'lit',
+ 'FOMO',
+ 'fam',
+ 'BigB',
+ 'AMA',
+ 'HowTo',
+ 'RisingStar',
+ 'Star',
+ 'Startup',
+ 'YouNow',
+ 'iPhone',
+ 'LoveWins',
+ 'Fashion',
+ 'Lol',
+ 'TBT',
+ 'Travel',
+ 'TFW',
+ 'Football',
+ 'Love',
+ 'Art',
+ 'Food',
+ 'WorldRecord']
 
 def check_res(tweet, terms):
     global ht
@@ -18,23 +97,24 @@ def check_res(tweet, terms):
         return True
     return False
 
-API = []
-for s in secrets:
-    API.append(twitter.Api(consumer_key=s['ckey'],
-                           consumer_secret=s['csec'],
-                           access_token_key=s['atkey'],
-                           access_token_secret=s['atsec']))
+# API = []
+# for s in secrets:
+#     API.append(twitter.Api(consumer_key=s['ckey'],
+#                            consumer_secret=s['csec'],
+#                            access_token_key=s['atkey'],
+#                            access_token_secret=s['atsec']))
 
-with open('screen_names.txt', 'w') as f:
+with open('mined.csv', 'w') as f:
+    f.write('screen_name,hashtag,tweet_id\n')
     try:
         #api = API[0]
         for t in terms:
             x = api.GetSearch(term=t,count=100,include_entities=False)
             for tweet in x:
-                if check_res(tweet,terms):
-                    f.write(tweet.user.screen_name + '\n')
-                print tweet.user.screen_name
-            sleep(2)
+                f.write('{0},#{1},{2}\n'.format(tweet.user.screen_name, t, str(tweet.id)))
+                # print tweet.user.screen_name
+            print 'Done ' + t
+            sleep(5)
     except twitter.TwitterError as e:
         print str(e)
     except Exception as e:
