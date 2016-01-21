@@ -110,9 +110,11 @@ with open('mined.csv', 'w') as f:
         #api = API[0]
         for t in terms:
             x = api.GetSearch(term=t,count=100,include_entities=False)
+            import ipdb;ipdb.set_trace()
             for tweet in x:
-                f.write('{0},#{1},{2}\n'.format(tweet.user.screen_name, t, str(tweet.id)))
+                # f.write('{0},#{1},{2}\n'.format(tweet.user.screen_name, t, str(tweet.id)))
                 # print tweet.user.screen_name
+                pass
             print 'Done ' + t
             sleep(5)
     except twitter.TwitterError as e:
